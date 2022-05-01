@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/3338497/pexels-photo-3338497.jpeg?auto=compress&cs=tinysrgb&w=1600");
+    }
+    #top{
+        display: flex;
+        gap: 2px;
+    }
+
+    #searchbar {
+        width: 300px;
+        height: 30px;
+        margin: auto;
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    input {
+        height: 20px;
+        width: 100%;
+    }
+
+    #searchbar>p {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    input:focus {
+        padding: 5px;
+    }
+
+    #receipe {
+        width: 90%;
+        margin: auto;
+        margin-top: 5%;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+
+    }
+
+    #receipe>div>div {
+        width: 30%;
+        height: 100%;
+        backdrop-filter: blur(15px);
+        color: aliceblue;
+        font-size: 20px;
+    }
+
+    #receipe>div>div:nth-child(2) {
+        width: 100%;
+    }
+
+    #receipe>div>div>img {
+        width: 400px;
+        height: 100%;
+    }
+
+    #receipe>div {
+        width: 100%;
+        display: flex;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    #receipe>div>div>a {
+        color: red;
+        border: 1px solid black;
+
+    }
+
+    #profile {
+        height: 200px;
+        width: 250px;
+        background-color: blur(80px);
+        color:aliceblue;
+        text-align: center;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="navbar"></div>
+    <div id="top">
+        <div id="profile"></div>
+        <div id="searchbar">
+            <p>Search Meal</p>
+            <input type="text" id="input">
+        </div>
+    </div>
+    <div id="receipe"></div>
+</body>
+
+</html>
+
+<script src="./scripts/index.js" type="module"></script>

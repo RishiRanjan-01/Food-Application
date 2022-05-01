@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+            background-image: url("https://images.unsplash.com/photo-1639094081500-a8f3775d239a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDg3fENEd3V3WEpBYkV3fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60");
+        }
+        #signup{
+            width: 30%;
+            backdrop-filter: blur(60px);
+            color:aliceblue;
+            display: grid;
+            justify-content: center;
+            border-radius: 8px;
+            margin: auto;
+            margin-top: 30px;
+            padding: 10px;
+        }
+        form > p > a{
+            text-decoration: none;
+            color:darkturquoise;
+            border: none;
+            font-weight: bold;
+        }
+        span{
+            color: red;
+        }
+        input{
+            width: 70%;
+            padding: 10px;
+            margin: auto;
+        }
+        form{
+            display: grid;
+            gap: -5px;
+            justify-content: center;
+            align-items: center;
+        }
+        form > div {
+            width: 75%;
+            margin: auto;
+        }
+        #submit{
+            width: 150px;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: darkred;
+            color: aliceblue;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        #submit:hover{
+            background-color: aliceblue;
+            color:black
+        }
+        form> p {
+            width: 38%;
+            text-align: center;
+        }
+        #top{
+            height: 100px;
+            width: 100%;
+            background-image: url("https://media1.giphy.com/media/3o6ZtpxSZbQRRnwCKQ/200w.webp?cid=ecf05e470mbqeerceovf7h8a7idrz0sifjjysnatx7ptk67n&rid=200w.webp&ct=g");
+        }
+        input:focus{
+            outline: 3px dotted dodgerblue;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+    <div id="signup">
+        <div id="top"></div>
+        <form>
+            <p><span>*</span>Name</p>
+            <input type="text" id="name" placeholder="Enter Name" required>
+            <p><span>*</span>Email</p>
+            <input type="email" id="email" placeholder="Enter Email" required>
+            <p><span>*</span>Password</p>
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <p><span>*</span>User Name</p>
+            <input type="text" id="username" placeholder="Enter User Name" required>
+            <p><span>*</span>Mobile</p>
+            <input type="number" id="mobile" placeholder="Enter Mobile" required>
+            <p></p>
+            <input type="text" id="description" placeholder="Description">
+            <div style="display: flex; gap:5px; margin-top:10px" aria-required="true">
+                <input type="checkbox" style="width:30px; margin-top:3px" >
+                <span style=" color:grey">I accept Hunger's use of my data for the service and everything else described in the Privacy Policy and Data Processing Agreement</span>
+            </div>
+            <input type="Submit" value="SignIn" id="submit">
+            
+            <p style="margin: auto; display:flex; width:250px; height:15px;align-items:center">Already have an Account <a href="login.html">Login</a></p>
+        </form>
+    </div>
+</body>
+</html>
+<script type="module">
+    import navbar from "./components/navbar.js"
+
+    document.getElementById("navbar").innerHTML = navbar();
+
+
+    let register = async (e)=>{
+        e.preventDefault();
+
+        let form = document.querySelector("form");
+
+        let form_data = {
+            name:form.name.value,
+            email:form.email.value,
+            password:form.password.value,
+            username:form.username.value,
+            mobile:form.mobile.value,
+            description:form.description.value,
+        }
+        //console.log(form_data)
+       form_data = JSON.stringify(form_data)
+
+       let res = await fetch("https://masai-api-mocker.herokuapp.com/auth/register",{
+           method:'POST',
+           body:form_data,
+          
+           headers:{
+               "Content-Type":"application/json",
+           },
+
+       })
+
+       let data = await res.json();
+       console.log(data)
+       alert(data.message)
+    }
+
+    document.querySelector("form").addEventListener("submit",register)
+</script>

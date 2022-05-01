@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url("https://images.unsplash.com/photo-1649095444416-aafcb29b04b9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDE2MXxDRHd1d1hKQWJFd3x8ZW58MHx8fHw%3D&auto=format&fit=crop&w=1550&q=60");
+        }
+
+        #login {
+            width: 20%;
+            height: 500px;
+            backdrop-filter: blur(80px);
+            margin: auto;
+            margin-top: 40px;
+            padding: 15px;
+            font-size: 20px;
+            color: aliceblue;
+            border-radius: 8px;
+
+
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 20px
+        }
+
+        #top {
+            height: 100px;
+            width: 100%;
+            background-image: url("https://media3.giphy.com/media/xUPGGDNsLvqsBOhuU0/200.webp?cid=ecf05e47wd89sr0s3ipkt8tbr9sezbl5kmubh0ilputpnnp4&rid=200.webp&ct=g");
+            background-position: 500pc;
+        }
+
+        button {
+            height: 30px;
+            width: 150px;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: black;
+            color: aliceblue;
+            border: none;
+            border-radius: 5px;
+            margin-top: 50px;
+            margin-left: 70px;
+
+        }
+
+        button+p {
+            font-size: 10px;
+            text-align: center;
+            margin-top: 30px;
+            color: darkred;
+        }
+
+        button:hover {
+            background-color: darkred;
+            color: aliceblue;
+        }
+
+        input:focus {
+            outline: 2px dotted brown;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar"></div>
+    <div id="login">
+        <div id="top"></div>
+        <p>User Name</p>
+        <input type="text" id="username" placeholder="Enter Your UserName" required>
+        <p>Password</p>
+        <input type="password" id="password" placeholder=" Enter Your Password" required>
+        <button id="submit">Login</button>
+        <p>All Right Reserved</p>
+    </div>
+</body>
+
+</html>
+
+<script type="module">
+    import navbar from "./components/navbar.js"
+
+    document.getElementById("navbar").innerHTML = navbar();
+
+
+    let login = async () => {
+
+        let user_data = {
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value
+        }
+        console.log(user_data);
+        user_data = JSON.stringify(user_data)
+
+        let res = await fetch("https://masai-api-mocker.herokuapp.com/auth/login", {
+            method: 'POST',
+            body: user_data,
+
+
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        let data = await res.json();
+
+        let username = document.getElementById("username").value;
+        getUserDetail(username,data.token)
+
+        //console.log(data)
+    }
+
+
+    document.getElementById("submit").addEventListener("click", login)
+
+    let getUserDetail = async (username, token) => {
+
+        try{
+            let res = await fetch(`https://masai-api-mocker.herokuapp.com/user/${username}`, {
+                //mode:"no-cors",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+    
+            let data = await res.json();
+            console.log("userData",data)
+
+            localStorage.setItem("userData",JSON.stringify(data))
+            alert("Login Sucessfull !")
+            window.location.href = "index.html"
+        }catch(err){
+            console.log(err);
+            alert("Sorry Credentials Not Matched !")
+        }
+
+        
+
+    }
+</script>
